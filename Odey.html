@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Odéys • Plan 2026–2028</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:rgba(255,255,255,.06);
+      --panel-2:rgba(255,255,255,.10);
+      --border:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted-2:rgba(255,255,255,.55);
+      --primary:#6ee7ff;
+      --primary-2:#7c3aed;
+      --good:#34d399;
+
+      --shadow:0 14px 40px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius-sm:12px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1000px 600px at 10% 10%, rgba(124,58,237,.22), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(110,231,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 40% 110%, rgba(52,211,153,.10), transparent 60%),
+        var(--bg);
+      overflow:hidden;
+    }
+
+    .app{
+      height:100%;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:16px;
+      padding:16px;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .brand{
+      padding:18px 18px 14px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .logo{
+      width:42px; height:42px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(110,231,255,.9), rgba(124,58,237,.75) 55%, rgba(0,0,0,.0) 72%),
+        rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
+
+    .brand h1{
+      font-size:14px;
+      margin:0;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .brand p{
+      margin:2px 0 0;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .icon-btn{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding:10px 10px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .icon-btn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
+    .icon-btn:active{ transform: translateY(0); }
+
+    .nav{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .nav .section-title{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+      padding: 4px 8px;
+    }
+
+    .tab{
+      width:100%;
+      text-align:left;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      cursor:pointer;
+      transition: background .15s ease, transform .15s ease, border-color .15s ease;
+    }
+    .tab:hover{ background: rgba(255,255,255,.08); transform: translateY(-1px); }
+    .tab:active{ transform: translateY(0); }
+    .tab[aria-selected="true"]{
+      background: linear-gradient(135deg, rgba(110,231,255,.14), rgba(124,58,237,.14));
+      border-color: rgba(110,231,255,.35);
+      box-shadow: 0 12px 26px rgba(0,0,0,.25);
+    }
+
+    .tab .dot{
+      width:10px; height:10px; border-radius: 99px;
+      background: rgba(255,255,255,.35);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.05);
+      flex: 0 0 auto;
+    }
+    .tab[aria-selected="true"] .dot{
+      background: var(--primary);
+      box-shadow: 0 0 0 4px rgba(110,231,255,.12);
+    }
+
+    .tab .label{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+    .tab .label strong{
+      font-size:14px;
+      font-weight:650;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .tab .label span{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .sidebar-footer{
+      margin-top:auto;
+      padding:14px 14px 16px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .chip{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: 999px;
+      padding: 6px 10px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .chip i{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--good);
+      display:inline-block;
+      box-shadow: 0 0 0 4px rgba(52,211,153,.12);
+    }
+
+    /* Main */
+    .main{
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .topbar{
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+
+    .topbar-left{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .kicker{
+      color: var(--muted-2);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    .page-title{
+      font-size:20px;
+      margin:0;
+      line-height:1.25;
+      letter-spacing:.2px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      font-weight:600;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); border-color: rgba(110,231,255,.25); }
+    .btn:active{ transform: translateY(0); }
+
+    .btn.primary{
+      border-color: rgba(110,231,255,.35);
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(124,58,237,.14));
+    }
+
+    .content{
+      padding:18px;
+      overflow:auto;
+      height:100%;
+    }
+
+    .card{
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom:14px;
+    }
+
+    .card h2{
+      margin:0 0 10px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+
+    .subtle{
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.65;
+      margin:0;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .pill{
+      border: 1px solid rgba(110,231,255,.22);
+      background: rgba(110,231,255,.06);
+      color: rgba(255,255,255,.85);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size:12px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+    .pill b{ color: var(--primary); font-weight:700; }
+
+    .editor{
+      margin-top:14px;
+      border-radius: var(--radius-sm);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+
+    .editor-toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size:12px;
+    }
+
+    /* Typography inside the editor */
+    .editor-area{
+      padding:16px;
+      min-height: 340px;
+      outline:none;
+      line-height:1.75;
+      font-size:14px;
+      color: var(--text);
+    }
+    .editor-area h3{
+      margin: 14px 0 8px;
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .editor-area p{ margin: 0 0 10px; color: rgba(255,255,255,.90); }
+    .editor-area ul{ margin: 8px 0 10px 18px; }
+    .editor-area li{ margin: 6px 0; color: rgba(255,255,255,.88); }
+    .editor-area details{ border:1px solid rgba(255,255,255,.10); border-radius:14px; padding:10px 12px; background: rgba(255,255,255,.03); }
+    .editor-area details summary{ list-style:none; }
+    .editor-area details summary::-webkit-details-marker{ display:none; }
+    .editor-area details + details{ margin-top:10px; }
+
+    .callout{
+      border:1px solid rgba(110,231,255,.20);
+      background: rgba(110,231,255,.06);
+      padding: 12px 12px;
+      border-radius: 14px;
+      margin: 10px 0 12px;
+      color: rgba(255,255,255,.90);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:10px;
+      margin-top: 10px;
+    }
+    .kpi{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 10px 10px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.86);
+    }
+    .kpi b{ color: var(--primary); }
+
+    .hint{
+      margin-top:10px;
+      color: var(--muted-2);
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .panel{ display:none; animation: fadeIn .18s ease; }
+    .panel.active{ display:block; }
+
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(6px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .mobile-toggle{ display:none; }
+
+    @media (max-width: 980px){
+      body{ overflow:auto; }
+      .app{ height:auto; grid-template-columns: 1fr; padding:12px; }
+      .sidebar{ position:sticky; top:12px; z-index:5; }
+      .mobile-toggle{ display:inline-flex; }
+      .sidebar[data-collapsed="true"] .nav,
+      .sidebar[data-collapsed="true"] .sidebar-footer{ display:none; }
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    :focus-visible{
+      outline: 2px solid rgba(110,231,255,.55);
+      outline-offset: 2px;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" data-collapsed="false">
+      <div class="brand">
+        <div class="brand-left">
+          <div class="logo" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <h1>Odéys • Strategy</h1>
+            <p>Plan • 2026 → 2028</p>
+          </div>
+        </div>
+        <button class="icon-btn mobile-toggle" id="toggleSidebar" title="Collapse/Expand sidebar" aria-label="Collapse/Expand sidebar">
+          ☰
+        </button>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <div class="section-title">Navigation</div>
+
+        <button class="tab" data-target="panel-plan" aria-selected="true">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">
+            <strong>Plan</strong>
+            <span>High-level summary</span>
+          </span>
+        </button>
+
+        <button class="tab" data-target="panel-deep" aria-selected="false">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">
+            <strong>Deep Plan</strong>
+            <span>OKRs • KPIs • Delivery</span>
+          </span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="chip"><i></i> Ready</span>
+        <span>v1.2</span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="kicker" id="kicker">Plan</div>
+          <h2 class="page-title" id="pageTitle">Summary of plan from 2026 to 2028</h2>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="btnCopy">Copy content</button>
+          <button class="btn primary" id="btnSave">Save (local)</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <!-- PLAN PANEL -->
+        <div class="panel active" id="panel-plan" role="region" aria-label="Plan panel">
+          <!-- Director Overview -->
+          <div class="card">
+            <h2>Director overview • Odéys</h2>
+            <p class="subtle">
+              As Director General, my role is to position Odéys as the region’s trusted operating system for the sustainable
+              construction transition in Nouvelle-Aquitaine: a neutral, credible platform that connects members and institutions,
+              accelerates innovation from idea to pilots/financing, and proves impact through auditable indicators. I will protect
+              Odéys’ territorial DNA (proximity, neutrality, collective intelligence) while strengthening fundamentals that make
+              impact scalable: disciplined governance, a unified operating rhythm across sites, reliable data, clear documentation,
+              and a financially resilient model.
+            </p>
+
+            <div class="pill-row" aria-hidden="true">
+              <span class="pill"><b>Mission:</b> Network + acceleration + measurable impact</span>
+              <span class="pill"><b>Method:</b> Simple, synchronized, documented execution</span>
+              <span class="pill"><b>Promise:</b> Credible results, not just activity</span>
+            </div>
+          </div>
+
+          <!-- Plan Summary -->
+          <div class="card">
+            <h2>Plan summary • 2026–2028</h2>
+            <p class="subtle">This is short summary of the plan.</p>
+
+            <div class="editor">
+              <div class="editor-toolbar">
+                <span>Editable content</span>
+                <span style="color:var(--muted-2)">Saved locally in your browser</span>
+              </div>
+
+              <div class="editor-area" id="editor-plan" contenteditable="true" spellcheck="true">
+                <div class="callout">
+                  <b>Leadership intent (2026–2028).</b>
+                  If you entrust me with the direction of Odéys, my objective is to strengthen Odéys as the reference operating
+                  system for sustainable construction and planning in Nouvelle-Aquitaine: deeply territorial and human, while
+                  structurally robust clear governance, measurable impact, and a delivery model that is simple, synchronized,
+                  and well-documented for members, partners, funders, and our team.
+                </div>
+
+                <h3>North Star (2026–2028): three outcomes</h3>
+                <ul>
+                  <li><b>Trusted regional network</b> generating concrete cross-sector synergies (companies, collectivités, research/training, associations).</li>
+                  <li><b>Neutral innovation accelerator</b> moving projects from <b>idea → structuring → financing/pilots</b> faster, with confidentiality and rigor.</li>
+                  <li><b>Credible sustainability driver</b> proving outcomes through <b>auditable indicators</b> (energy, circularity, climate, industrialization, digitalization, health/comfort)—not only activity.</li>
+                </ul>
+
+                <h3>From activity to an integrated execution system</h3>
+                <p>
+                  My first act as DG will be to review Odéys’ real workflows end-to-end across sites and missions, and formalize them into
+                  clear process maps (workflow/UML style). This will surface bottlenecks, duplicated work, unclear decision rights, and hidden costs.
+                  From there, we will build <b>“One Odéys Operating System”</b>: Shared standards where necessary, and local autonomy where proximity creates value.
+                  The goal is just not bureaucracy, but fewer tools, fewer unclear handoffs, better predictability, and more time for high-impact work.
+                </p>
+
+                <h3>Strategic priorities</h3>
+                <ul>
+                  <li><b>Governance & synchronization:</b> weekly ops sync, monthly performance review (one dashboard), quarterly Board review; clear RACI; stable and fair reporting.</li>
+                  <li><b>Member value:</b> standardized member journey (segmentation, service catalogue, clear contact points), improved responsiveness, visible value through outcomes.</li>
+                  <li><b>Innovation acceleration:</b> single intake/qualification pathway, confidentiality embedded, structured progression to partners/financing/pilots.</li>
+                  <li><b>Impact measurement:</b> small, defensible indicator set aligned with Odéys themes to strengthen credibility with members and institutions.</li>
+                  <li><b>Digital backbone + documentation:</b> one source of truth for member/project/event/training data + Odéys Playbook (SOPs, templates, decision logs); automation targeting repetitive work.</li>
+                </ul>
+
+                <h3>Economic model and targets</h3>
+                <p>
+                  Protect Odéys’ independence with a balanced, predictable revenue mix (membership packaging/retention, mission-consistent paid services,
+                  structured partnerships and multi-year programs) and secure EBITDA through portfolio discipline, standardization/automation to reduce cost-to-serve,
+                  tool consolidation, and rolling 12-month forecasting.
+                </p>
+
+                <div class="grid">
+                  <div class="kpi">
+                    <b>2026 • Foundation</b><br/>
+                    100% workflows mapped + Playbook v1<br/>
+                    ≥90% data completeness<br/>
+                    ≥60% automation<br/>
+                    ≥30% cycle-time reduction<br/>
+                    100% on-time funder reporting
+                  </div>
+                  <div class="kpi">
+                    <b>2027 • Scale</b><br/>
+                    Qualification ≤10 working days<br/>
+                    ≥20% more projects reaching next milestone<br/>
+                    +10 points member satisfaction<br/>
+                    ≥15% partnership activation<br/>
+                    +15–25% service/program revenue growth (or Board target)
+                  </div>
+                  <div class="kpi">
+                    <b>2028 • Reference</b><br/>
+                    Stable multi-year partnerships; reduced dependency risk<br/>
+                    Annual impact reporting with auditable indicators<br/>
+                    ≥10–15% cost-to-serve reduction vs 2026<br/>
+                    EBITDA secured
+                  </div>
+                </div>
+
+                <h3>Closing commitment</h3>
+                <p>
+                  I will protect Odéys’ values—proximity, neutrality, collective intelligence—while building the execution system that enables scale:
+                  simple, synchronized, documented, measurable, and financially resilient.
+                </p>
+              </div>
+            </div>
+
+            <div class="hint">
+              Use <b>Save (local)</b> to keep edits in your browser. Use <b>Copy content</b> to paste into Word or emails.
+            </div>
+          </div>
+        </div>
+
+        <!-- DEEP PLAN PANEL -->
+        <div class="panel" id="panel-deep" role="region" aria-label="Deep plan panel">
+          <div class="card">
+            <h2>Deep plan • 2026–2028</h2>
+            <p class="subtle">Prefilled OKR/KPI execution content .</p>
+
+            <div class="editor">
+              <div class="editor-toolbar">
+                <span>Editable content</span>
+                <span style="color:var(--muted-2)">Saved locally in your browser</span>
+              </div>
+
+              <div class="editor-area" id="editor-deep" contenteditable="true" spellcheck="true">
+                <div class="callout">
+                  <b>Deep plan for 2026 to 2028.</b>
+                  This section consolidates the execution system, OKRs/KPIs, digital backbone, Board pack, and the quarter-by-quarter delivery timeline.
+                </div>
+
+                <h3>Executive Summary</h3>
+                <p>
+                  This execution plan strengthens Odéys as the regional reference operating system for sustainable construction and planning in
+                  Nouvelle-Aquitaine: human and territorial, yet structurally robust through clear governance, measurable impact, and a simple,
+                  synchronous, well-documented delivery model. It is designed to be directly usable for governance, funder reporting, and internal delivery.
+                </p>
+
+                <div class="callout">
+                  <b>What this deep plan includes:</b>
+                  (i) KPI architecture + Board scorecard, (ii) OKR roadmap 2026–2028, (iii) minimal digital backbone + data sources,
+                  (iv) quarterly Board Pack template, and (v) Q1-2026 blueprint based on workflow/UML process review.
+                </div>
+
+                <h3>KPI Architecture (Board Scorecard)</h3>
+                <p>
+                  A minimal, decision-oriented scorecard (12–15 KPIs) grouped into five families. Definitions are locked in the Playbook to ensure consistency.
+                </p>
+
+                <table style="width:100%; border-collapse:collapse; font-size:13px; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.12);">
+                  <thead style="background:rgba(255,255,255,.06);">
+                    <tr>
+                      <th style="text-align:left; padding:10px; border-bottom:1px solid rgba(255,255,255,.10);">KPI family</th>
+                      <th style="text-align:left; padding:10px; border-bottom:1px solid rgba(255,255,255,.10);">What is measured (examples)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Operational Excellence (OE)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Cycle time, Automation, Data quality, SLA adherence</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Network & Member Value (NM)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Retention, Engagement index, Satisfaction, Collaboration rate</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Innovation Acceleration (IA)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Qualification lead time, Next-milestone conversion, Throughput, Confidentiality compliance</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Sustainability & Market Impact (SI)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Outcome-indicator coverage, Adoption outcomes, Auditability of impact report</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px;"><b>Financial Resilience (FR)</b></td>
+                      <td style="padding:10px;">Revenue diversification, Earned income growth, EBITDA safety band, Forecast accuracy & cash discipline</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <p class="hint">
+                  Cadence: weekly operational sync (OE), monthly performance review (OE/NM/IA/FR), quarterly Board review (all KPI families + decisions).
+                </p>
+
+                <h3>OKRs 2026–2028 (Board-ready)</h3>
+                <p class="subtle">Baselines are set during the Q1-2026 diagnostic (workflow/UML review + data audit).</p>
+
+                <details open style="margin-top:10px;">
+                  <summary style="cursor:pointer; font-weight:700;">2026 — Foundation</summary>
+                  <div style="margin-top:10px;">
+                    <p><b>Objective 1:</b> Synchronize governance and decision-making across 5 locations</p>
+                    <ul>
+                      <li><b>KR1.1</b> Core workflows mapped and validated (workflow/UML): <b>100% core workflows</b></li>
+                      <li><b>KR1.2</b> RACI approved and used: <b>100% processes with RACI</b></li>
+                      <li><b>KR1.3</b> Cadence installed (weekly/monthly/quarterly packs): <b>≥90% attendance; 100% on-time packs</b></li>
+                    </ul>
+
+                    <p><b>Objective 2:</b> Build a single source of truth and Playbook v1</p>
+                    <ul>
+                      <li><b>KR2.1</b> Data completeness & accuracy: <b>≥90% completeness; ≥95% accuracy</b></li>
+                      <li><b>KR2.2</b> Playbook v1 published: <b>≥15 SOPs + templates + logs</b></li>
+                      <li><b>KR2.3</b> Member request cycle time reduced: <b>≥30% reduction vs baseline</b></li>
+                    </ul>
+
+                    <p><b>Objective 3:</b> Automate recurring work and improve reliability</p>
+                    <ul>
+                      <li><b>KR3.1</b> Admin automation rate: <b>≥60% automated; ≥40h/month saved</b></li>
+                      <li><b>KR3.2</b> Events workflow automation + feedback: <b>≥40% feedback; ≥80% follow-up in 10 days</b></li>
+                      <li><b>KR3.3</b> Funder reporting on-time: <b>100% on-time</b></li>
+                    </ul>
+
+                    <p><b>Objective 4:</b> Secure financial controls and EBITDA safety rules</p>
+                    <ul>
+                      <li><b>KR4.1</b> Rolling 12-month forecast: <b>forecast variance &lt; 10% by Q4</b></li>
+                      <li><b>KR4.2</b> Portfolio scoring applied: <b>100% new initiatives scored</b></li>
+                      <li><b>KR4.3</b> Tool/vendor consolidation: <b>savings target set Q2; achieved Q4</b></li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details style="margin-top:10px;">
+                  <summary style="cursor:pointer; font-weight:700;">2027 — Scale</summary>
+                  <div style="margin-top:10px;">
+                    <p><b>Objective 1:</b> Increase member value, retention, and engagement</p>
+                    <ul>
+                      <li><b>KR1.1</b> Retention/renewal improvement: <b>+5 pts vs 2026</b></li>
+                      <li><b>KR1.2</b> Satisfaction improvement: <b>+10 pts (NPS or equivalent)</b></li>
+                      <li><b>KR1.3</b> Collaboration rate increase: <b>≥15% increase</b></li>
+                    </ul>
+
+                    <p><b>Objective 2:</b> Make innovation support faster and more predictable</p>
+                    <ul>
+                      <li><b>KR2.1</b> Intake → qualification time: <b>≤10 working days</b></li>
+                      <li><b>KR2.2</b> Next-milestone conversion: <b>≥20% increase vs 2026</b></li>
+                      <li><b>KR2.3</b> Confidentiality compliance: <b>100% for flagged projects</b></li>
+                    </ul>
+
+                    <p><b>Objective 3:</b> Prove sustainability outcomes (not only activity)</p>
+                    <ul>
+                      <li><b>KR3.1</b> Outcome-indicator coverage: <b>≥80% coverage</b></li>
+                      <li><b>KR3.2</b> Publish scorecard: <b>2 publications/year (mid-year + annual)</b></li>
+                      <li><b>KR3.3</b> Adoption outcomes (QBDNA/best practices): <b>targets set Q1; achieved Q4</b></li>
+                    </ul>
+
+                    <p><b>Objective 4:</b> Grow earned income and increase resilience</p>
+                    <ul>
+                      <li><b>KR4.1</b> Service/program revenue growth: <b>+15–25% or Board target</b></li>
+                      <li><b>KR4.2</b> Dependency reduction (top source share): <b>trend toward threshold</b></li>
+                      <li><b>KR4.3</b> EBITDA within safety band: <b>maintain within band</b></li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details style="margin-top:10px;">
+                  <summary style="cursor:pointer; font-weight:700;">2028 — Reference</summary>
+                  <div style="margin-top:10px;">
+                    <p><b>Objective 1:</b> Establish Odéys as the regional benchmark for transition delivery</p>
+                    <ul>
+                      <li><b>KR1.1</b> Annual impact report (auditable): <b>published with evidence pack</b></li>
+                      <li><b>KR1.2</b> Multi-year strategic partnerships: <b>≥15% increase vs 2027</b></li>
+                      <li><b>KR1.3</b> Satisfaction consistency across sites: <b>maintain or improve 2027</b></li>
+                    </ul>
+
+                    <p><b>Objective 2:</b> Operational maturity: scalable quality at lower cost-to-serve</p>
+                    <ul>
+                      <li><b>KR2.1</b> Cost-to-serve reduction: <b>≥10–15% vs 2026</b></li>
+                      <li><b>KR2.2</b> Data quality sustained: <b>≥95% completeness; ≥97% accuracy</b></li>
+                      <li><b>KR2.3</b> Playbook v3 continuous improvement: <b>each core process improved ≥2 times since 2026</b></li>
+                    </ul>
+
+                    <p><b>Objective 3:</b> Secure long-term financial independence and EBITDA safety</p>
+                    <ul>
+                      <li><b>KR3.1</b> Revenue mix meets thresholds: <b>thresholds respected</b></li>
+                      <li><b>KR3.2</b> Earned income predictable share: <b>target share achieved</b></li>
+                      <li><b>KR3.3</b> EBITDA safety + operating buffer: <b>buffer policy implemented</b></li>
+                    </ul>
+                  </div>
+                </details>
+
+                <h3>Digital Backbone & Data Sources (Implementation-ready)</h3>
+                <p>Minimal stack with one system of record per domain; BI is read-only and fed from systems of record.</p>
+
+                <table style="width:100%; border-collapse:collapse; font-size:13px; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.12);">
+                  <thead style="background:rgba(255,255,255,.06);">
+                    <tr>
+                      <th style="text-align:left; padding:10px; border-bottom:1px solid rgba(255,255,255,.10);">Domain (system of record)</th>
+                      <th style="text-align:left; padding:10px; border-bottom:1px solid rgba(255,255,255,.10);">What it contains</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Members & Partners (CRM)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Orgs, contacts, segmentation, renewals, partnerships, interactions</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Projects & Innovation Portfolio (PPM)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Intake, qualification, stages, milestones, confidentiality, outcomes</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Events & Training (Event/LMS)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Registrations, attendance, surveys, certifications, follow-ups</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Knowledge & Playbook (KB)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">SOPs, templates, decision logs, RACI, workflow/UML diagrams</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);"><b>Finance (Accounting)</b></td>
+                      <td style="padding:10px; border-bottom:1px solid rgba(255,255,255,.08);">Revenue mix, earned income, forecasts, EBITDA, cash discipline</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:10px;"><b>Dashboards (BI)</b></td>
+                      <td style="padding:10px;">Scorecard + quarterly Board pack (read-only)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <h3>Quarterly Board Pack (template)</h3>
+                <p>
+                  Standard structure (4–6 pages) with explicit decisions requested at the end of each pack:
+                  Executive scorecard; OKR status; portfolio & pipeline; financial page; risk register.
+                </p>
+
+                <h3>Q1-2026 Implementation Blueprint (First 12 weeks)</h3>
+                <ul>
+                  <li><b>Weeks 1–6:</b> Workflow/UML process review → process maps, bottlenecks, handoffs, time-cost estimate; draft RACI</li>
+                  <li><b>Weeks 3–8:</b> Data model & definitions → mandatory fields, taxonomies, data-quality audit protocol; data steward assigned</li>
+                  <li><b>Weeks 6–12:</b> Dashboard + Board Pack v1 → scorecard with locked definitions; baselines set; 2026 targets finalized; reporting close checklist</li>
+                </ul>
+
+                <h3>Integrated Delivery Timeline (Q1 2026 → Q4 2028)</h3>
+                <p class="subtle">
+                  Quarter-by-quarter execution plan with the Why / What / When / How logic, designed to be operational for the President, Board, and management team.
+                </p>
+
+                <details open style="margin-top:10px;">
+                  <summary style="cursor:pointer; font-weight:700;">2026 — Diagnostic → Standardize → Automate → Foundation complete</summary>
+                  <ul style="margin-top:10px;">
+                    <li><b>Q1 2026:</b> Diagnostic & baseline lock (workflow/UML maps, draft RACI, data dictionary, KPI baselines, Board Pack v1)</li>
+                    <li><b>Q2 2026:</b> Standardize & stabilize (Playbook v1, RACI approved, standardized intake/qualification, SLAs, reporting checklist, automation quick wins)</li>
+                    <li><b>Q3 2026:</b> Automate & improve reliability (40–50% automation coverage, event workflow automation, better SLA adherence, cycle-time trend confirmed)</li>
+                    <li><b>Q4 2026:</b> Foundation complete & 2027 scale plan (100% workflows documented, ≥90% data completeness, ≥60% automation, 2027 OKRs locked, vendor/tool consolidation)</li>
+                  </ul>
+                </details>
+
+                <details style="margin-top:10px;">
+                  <summary style="cursor:pointer; font-weight:700;">2027 — Scale member value → Accelerate innovation → Prove outcomes → Grow earned income</summary>
+                  <ul style="margin-top:10px;">
+                    <li><b>Q1 2027:</b> Scale member value & engagement (segmentation + catalogue, renewal playbook, engagement index, satisfaction pulse)</li>
+                    <li><b>Q2 2027:</b> Accelerate innovation pipeline (≤10 working days intake→qualification, stage-gates, conversion up, confidentiality audited)</li>
+                    <li><b>Q3 2027:</b> Prove sustainability outcomes (≥80% outcome indicators; mid-year scorecard published with evidence)</li>
+                    <li><b>Q4 2027:</b> Grow earned income & resilience (+15–25% service revenue or Board target; dependency reduction; EBITDA in band)</li>
+                  </ul>
+                </details>
+
+                <details style="margin-top:10px;">
+                  <summary style="cursor:pointer; font-weight:700;">2028 — Benchmark position → Operational maturity → Audit-ready impact → Resilience locked</summary>
+                  <ul style="margin-top:10px;">
+                    <li><b>Q1 2028:</b> Benchmark positioning & multi-year partnerships (framework agreements, partner KPI reviews, cross-site calibration)</li>
+                    <li><b>Q2 2028:</b> Operational maturity & cost-to-serve reduction (toward 10–15% vs 2026; automation ROI; Playbook v3)</li>
+                    <li><b>Q3 2028:</b> Audit-ready impact reporting (indicator traceability, evidence pack, annexes)</li>
+                    <li><b>Q4 2028:</b> Resilience locked & 2029+ transition plan (revenue mix thresholds respected; earned income stable; operating buffer policy; annual impact report published)</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+
+            <div class="hint">
+              Tip: keep this as your “Board-ready” section: scorecard + OKRs + delivery cadence + decision points.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ---------- Tab switching ----------
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const panels = Array.from(document.querySelectorAll(".panel"));
+    const pageTitle = document.getElementById("pageTitle");
+    const kicker = document.getElementById("kicker");
+
+    const titles = {
+      "panel-plan": { kicker: "Plan", title: "Summary of plan from 2026 to 2028" },
+      "panel-deep": { kicker: "Deep Plan", title: "Deep plan for 2026 to 2028" }
+    };
+
+    function activate(targetId){
+      panels.forEach(p => p.classList.toggle("active", p.id === targetId));
+      tabs.forEach(t => t.setAttribute("aria-selected", (t.dataset.target === targetId) ? "true" : "false"));
+      kicker.textContent = titles[targetId].kicker;
+      pageTitle.textContent = titles[targetId].title;
+      localStorage.setItem("active_tab", targetId);
+    }
+
+    tabs.forEach(t => {
+      t.addEventListener("click", () => activate(t.dataset.target));
+      t.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          activate(t.dataset.target);
+        }
+      });
+    });
+
+    // ---------- Local save/load (store HTML so formatting stays) ----------
+    const editorPlan = document.getElementById("editor-plan");
+    const editorDeep = document.getElementById("editor-deep");
+
+    function saveAll(){
+      localStorage.setItem("content_plan_html", editorPlan.innerHTML);
+      localStorage.setItem("content_deep_html", editorDeep.innerHTML);
+      toast("Saved locally ✓");
+    }
+
+    function loadAll(){
+      const plan = localStorage.getItem("content_plan_html");
+      const deep = localStorage.getItem("content_deep_html");
+      if(plan) editorPlan.innerHTML = plan;
+      if(deep) editorDeep.innerHTML = deep;
+
+      const active = localStorage.getItem("active_tab");
+      if(active && document.getElementById(active)) activate(active);
+    }
+
+    // Autosave
+    let autosaveTimer = null;
+    function scheduleAutosave(){
+      window.clearTimeout(autosaveTimer);
+      autosaveTimer = window.setTimeout(saveAll, 700);
+    }
+    editorPlan.addEventListener("input", scheduleAutosave);
+    editorDeep.addEventListener("input", scheduleAutosave);
+
+    document.getElementById("btnSave").addEventListener("click", saveAll);
+
+    // ---------- Copy content ----------
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      const active = localStorage.getItem("active_tab") || "panel-plan";
+      const node = document.getElementById(active === "panel-plan" ? "editor-plan" : "editor-deep");
+      const text = node.innerText.trim();
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Copied ✓");
+      }catch{
+        toast("Copy failed (browser blocked).");
+      }
+    });
+
+    // ---------- Mobile sidebar toggle ----------
+    const sidebar = document.getElementById("sidebar");
+    const toggleSidebar = document.getElementById("toggleSidebar");
+    if(toggleSidebar){
+      toggleSidebar.addEventListener("click", () => {
+        const collapsed = sidebar.getAttribute("data-collapsed") === "true";
+        sidebar.setAttribute("data-collapsed", collapsed ? "false" : "true");
+      });
+    }
+
+    // ---------- Toast ----------
+    function toast(message){
+      const el = document.createElement("div");
+      el.textContent = message;
+      el.style.position = "fixed";
+      el.style.right = "18px";
+      el.style.bottom = "18px";
+      el.style.zIndex = "9999";
+      el.style.padding = "10px 12px";
+      el.style.borderRadius = "14px";
+      el.style.border = "1px solid rgba(255,255,255,.14)";
+      el.style.background = "rgba(10,16,28,.72)";
+      el.style.backdropFilter = "blur(10px)";
+      el.style.color = "rgba(255,255,255,.92)";
+      el.style.boxShadow = "0 14px 36px rgba(0,0,0,.45)";
+      el.style.fontSize = "13px";
+      el.style.fontWeight = "650";
+      el.style.transform = "translateY(8px)";
+      el.style.opacity = "0";
+      el.style.transition = "opacity .16s ease, transform .16s ease";
+      document.body.appendChild(el);
+
+      requestAnimationFrame(() => {
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+      });
+
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(8px)";
+        setTimeout(() => el.remove(), 220);
+      }, 1200);
+    }
+
+    // Init
+    loadAll();
+  </script>
+</body>
+</html>
